@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/randomizer}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+  jpa:
+    show-sql: true
+picsum:
+  url: https://picsum.photos/1080
+server:
+  port: ${PORT:8080}

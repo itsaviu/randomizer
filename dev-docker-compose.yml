@@ -1,0 +1,29 @@
+version: "3"
+services:
+  randomizer-mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping']
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    environment:
+      - MYSQL_DATABASE=randomizer
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+  app:
+    image: aviu95/randomizer:latest
+    ports:
+      - 5000:5000
+    environment:
+      - DB_URL=jdbc:mysql://randomizer-mysql:3306/randomizer
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+      - PORT=5000
+    restart: on-failure
+    depends_on:
+      - randomizer-mysql
